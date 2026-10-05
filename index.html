@@ -34,9 +34,6 @@ small{color:#5b6477}
 button,.btn{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;margin-top:20px;padding:14px;font:inherit;font-weight:700;color:var(--ink);background:var(--accent);border:0;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .2s}
 button:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(229,168,35,.45)}
 button:active,.btn:active{transform:scale(.98)}
-button:disabled{opacity:.7;cursor:wait;transform:none;box-shadow:none}
-button:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-.spin{width:16px;height:16px;border:3px solid rgba(20,33,61,.3);border-top-color:var(--ink);border-radius:50%;animation:tourne .7s linear infinite}
 .msg{margin-top:14px;font-weight:600;min-height:1.5em}
 .err{color:var(--err)}.good{color:var(--ok)}
 .shake{animation:shake .4s}
@@ -46,15 +43,12 @@ button:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-off
 .succes svg{width:90px;height:90px}
 .succes circle{fill:none;stroke:var(--ok);stroke-width:5;stroke-dasharray:252;stroke-dashoffset:252;animation:trace .7s .1s forwards}
 .succes path{fill:none;stroke:var(--ok);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:trace .5s .7s forwards}
-.conf{position:fixed;top:-12px;width:9px;height:14px;z-index:9;pointer-events:none;animation:chute linear forwards}
 @keyframes flow{50%{background-position:100% 50%}}
 @keyframes float{50%{transform:translateY(18px)}}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 @keyframes glisse{from{opacity:0;transform:translateX(24px)}}
-@keyframes tourne{to{transform:rotate(1turn)}}
 @keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
 @keyframes trace{to{stroke-dashoffset:0}}
-@keyframes chute{to{transform:translateY(105vh) rotate(720deg);opacity:.8}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
 </style>
 </head>
@@ -94,30 +88,51 @@ button:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-off
 </main>
 
 <script>
-// A MODIFIER AVANT DE PUBLIER
-const URL_SCRIPT = "COLLE_ICI_LURL_DU_SCRIPT_GOOGLE";
-const WHATSAPP = "2290169710623"; // ton numéro, sans le +
+// A MODIFIER : ton numéro WhatsApp, sans le + (ex : 22901000000)
+const WHATSAPP = "22992624133";
+
+const LISTE = [
+"NOUSSAHOU|Samuel José","KPOMAHO|Bignon Estino Melvin","HOUNDJAHOUE|Sèdjro Lumen","AGBIDINOUKOUN|Axel Cédric Akpédjé",
+"SALIFOU ASSOUIN|Chérif","LOKOSSOU BOCO ABLI|Medesse Oswald Amen","WELLA|Salomon","AKPOVO|Destine Manwanou",
+"LIADY|Ismaïl Ishola Adéwalé Akorédé","ATTINGAMME|Mahougnon Fred Trésor","DASSI|Ayodé Sènami Grâce Divine","DANNON|Prince Donald",
+"HOUNDJI|Brayane Sègnon Dario","TONOU ADAHOU|Amidou","BOSSOU|Gamavo Brown","AGUESSY|Paulin-Muriel Sedjro",
+"AHOLOU|Sedjro Joris Précieux","SINGBO|Finagnon Mariel Joino","LOKOSSOU|Séjesuton Jésam Joas","GANHOUNOUTO|Togbédji Enock Hector",
+"BAKPE|Ridwan","HOUNGBEDJI|Christson Abdiel Barak Ben-Shaddai","KOUDOKPODE|Mahuton Ronaldo Josaphat","GBAVOU LOHOU|Vertueux Mawouyram Consolateur",
+"SALAKO|Klissimèyon Perside","ADOTO|Bignon Franklin","ADJANOUHOUANKOUN|Mawuna Deogracias","TOVIESSI|Yetontcho Ozias Michael",
+"KASSOUNOU|Tawal","LANDEHOU|Gedeon","WANNOUKON|Benoît","AYIDEGNON|Zinsou Michel Kévin",
+"CHEDJI|Louange Esther Dègnon","HOUNKPETO|Aihadji Prince","HOUNKANRIN|Jawu Moïse","CHABI|Werry I. B. Eliès Aldricks",
+"AKOUENOUBA|Impérial Testac Christimè Crédo","ALFA BIO|Rahim","DJOSSOU|Symplice Gustave","N'SOUGAN|Paul Salifou",
+"AKABASSI|Godwill Daniel","LOKOSSOU|Féerique Housnia Sèdami","MOUNKEILA|Aliyath","YAGBANNON|Elie Mètogbé",
+"AZONSI|Marie Adorèce Mahuclo","HOUENONTIN|Ange Noé","MITCHAI|Ernestine Nondomey Belvida","ALOUKOU|Vigan Daniel",
+"AZANDOSSESSI|Esteban Madjid Oremide","BONI|Staline Franklin","DAGBETO|Aldric Précieux Mahugnon","ZOUNTCHEME|Ayanman Jaïrus Luck",
+"TCHEHO|Mahougnon Harold Servais","KPOSSOU|Olouwakèmi Espérancia","OROU DOKO|Sanni Benjamin","SOVI|Dona Gbèdossou",
+"YAKA|Ola-Fèmi Franck","ZOHOUNGBOGBO|Pierrick Mahouna Joseph","AGNIHOUEDE|Messan Baude Cyriano","ASSOGBAGA|Christ Aris Melvys",
+"GOUSSANOU|Témilola Espéra Silas","ADESSE|Yélian Samuel Michel","ACLAGBE|Gabin Camille","AGOSSOU|Ilios Prince Lysias",
+"AKPADJAN|Sènakpon Ange Blessing","DOUROSSIMY|Marie-Albert Adékounlé","GANHOU|Akpénin Josué Glorieux","GBENOU|Dossi Dotou Zita",
+"SABI YÔ|Sabi Kora","SODJINOU|Toyigbe Mathys Aymard","AGBAYAHOUN|Sètondji Chamile Hydalgo","HOUNKANRIN|Bryan Derek Sedo",
+"TOBOU|Oswald Ochosias Ayétou","AZONHOUMON|Finagnon Victorin","HOUEDANOU|Gaston De Marie","BADOU|Joël Toussaint Sam Fifatin",
+"HOUNGBEME|Sèwanoudé Godspeed Gaël","LANDEOU|Exaucé Sèwèto Loïc","TASSINDJA|Ibtissam","AHOUIGNAN|Espérance Lydwine Houéfa",
+"EKPELIKPEZE|Armolive Amen Espoir","HOUNKPATIN|Cyrus Fernando Sènan","GBEDO|Sèflinmy Milka"
+];
 
 const $ = id => document.getElementById(id);
-let nomSaisi = "";
+let nomTrouve = "", nomSaisi = "";
+
+const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean);
+function trouver(saisie){
+  const m = norm(saisie); if (m.length < 2) return null;
+  for (const l of LISTE){ const t = norm(l.replace("|"," ")); if (m.every(x => t.includes(x))) return l.split("|").join(" "); }
+  return null;
+}
 
 function msg(t, cls){ const m=$("msg"); m.textContent=t; m.className="msg "+(cls||""); }
 function erreur(t){ msg(t,"err"); const c=$("carte"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); }
-function charge(b, on, txt){ b.disabled=on; b.innerHTML = on ? '<span class="spin"></span>'+txt : txt; }
 function etape(n){
   [1,2,3].forEach(i=>{ const p=$("p"+i); p.className="pt"+(i<n?" fait":i===n?" on":""); p.textContent=i<n?"\u2713":i; });
   $("b1b").classList.toggle("fait",n>1); $("b2b").classList.toggle("fait",n>2);
 }
 function montre(id){ ["s1","s2","s3"].forEach(s=>$(s).classList.add("hide")); const e=$(id); e.classList.remove("hide","slide"); void e.offsetWidth; e.classList.add("slide"); }
 function fin(html,n){ $("s3").innerHTML=html; montre("s3"); etape(n||3); msg(""); }
-
-function confettis(){
-  const cols=["#e5a823","#1f7a4d","#14213d","#f3d27a"];
-  for(let i=0;i<40;i++){ const c=document.createElement("i"); c.className="conf";
-    c.style.left=Math.random()*100+"vw"; c.style.background=cols[i%4];
-    c.style.animationDuration=(1.8+Math.random()*1.6)+"s"; c.style.animationDelay=Math.random()*.5+"s";
-    document.body.appendChild(c); setTimeout(()=>c.remove(),4200); }
-}
 const coche='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/><path d="M30 52 L45 66 L71 36"/></svg>';
 
 function refus(){
@@ -129,32 +144,23 @@ function refus(){
 
 $("nom").addEventListener("keydown", e => { if(e.key==="Enter") $("b1").click(); });
 
-$("b1").onclick = async () => {
+$("b1").onclick = () => {
   nomSaisi = $("nom").value.trim();
   if (nomSaisi.split(/\s+/).length < 2) return erreur("Écris ton nom et au moins un prénom.");
-  charge($("b1"), true, "Vérification..."); msg("");
-  try {
-    const r = await (await fetch(URL_SCRIPT + "?nom=" + encodeURIComponent(nomSaisi))).json();
-    if (r.statut === "absent") { charge($("b1"), false, "Vérifier mon nom"); return refus(); }
-    if (r.statut === "deja") return fin('<div class="succes">'+coche+'<p class="good">Ta place est déjà confirmée. Rien d\'autre à faire.</p></div>');
-    $("who").textContent = r.nom; montre("s2"); etape(2); msg("");
-  } catch (e) { erreur("Problème de connexion. Réessaie dans un instant."); }
-  charge($("b1"), false, "Vérifier mon nom");
+  nomTrouve = trouver(nomSaisi);
+  if (!nomTrouve) return refus();
+  $("who").textContent = nomTrouve; montre("s2"); etape(2); msg("");
 };
 
-$("b2").onclick = async () => {
+$("b2").onclick = () => {
   const tel = $("tel").value.trim(), email = $("mail").value.trim();
   if (tel.replace(/\D/g, "").length < 8) return erreur("Le numéro de téléphone semble incomplet.");
   if (!/^\S+@\S+\.\S+$/.test(email)) return erreur("L'adresse email n'est pas valide.");
-  charge($("b2"), true, "Enregistrement..."); msg("");
-  try {
-    const r = await (await fetch(URL_SCRIPT, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ nom: nomSaisi, tel, email }) })).json();
-    if (r.statut === "confirme") { fin('<div class="succes">'+coche+'<h2>Place confirmée</h2><p class="good">Garde ton téléphone à portée, on te contactera.</p></div>'); return confettis(); }
-    if (r.statut === "deja") return fin('<div class="succes">'+coche+'<p class="good">Ta place était déjà confirmée.</p></div>');
-    charge($("b2"), false, "Confirmer ma place"); return refus();
-  } catch (e) { erreur("L'enregistrement a échoué. Réessaie."); }
-  charge($("b2"), false, "Confirmer ma place");
+  const texte = "Confirmation de place INSPEI\nNom : " + nomTrouve + "\nTéléphone : " + tel + "\nEmail : " + email;
+  const lien = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(texte);
+  fin('<div class="succes">'+coche+'<h2>Dernière étape</h2><p>Appuie sur le bouton, WhatsApp s\'ouvre avec ton message. <strong>Appuie sur envoyer</strong> : ta place n\'est confirmée qu\'après l\'envoi.</p></div>'
+    + '<a class="btn" href="'+lien+'">Envoyer sur WhatsApp</a>');
 };
 </script>
 </body>
-  </html>
+</html>
