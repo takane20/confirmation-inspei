@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirmation de place | INSPEI UNSTIM</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14213d;--bg:#f6f7f9;--card:#fff;--accent:#e5a823;--ok:#1f7a4d;--err:#b3261e;--line:#d9dde5}
+*{box-sizing:border-box}
+body{margin:0;font-family:Sora,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
+header{position:relative;overflow:hidden;color:#fff;padding:30px 20px 44px;border-bottom:6px solid var(--accent);
+  background:linear-gradient(120deg,#14213d,#1d3566,#14213d);background-size:200% 200%;animation:flow 10s ease infinite}
+header::before,header::after{content:"";position:absolute;border-radius:50%;background:var(--accent);opacity:.15;animation:float 7s ease-in-out infinite}
+header::before{width:150px;height:150px;right:-40px;top:-50px}
+header::after{width:90px;height:90px;left:-25px;bottom:-35px;animation-delay:-3s}
+header p,header h1{position:relative;max-width:520px;margin-inline:auto;animation:rise .7s both}
+header p{margin-bottom:0}
+header h1{font-size:1.65rem;line-height:1.2;margin-top:6px;margin-bottom:8px;animation-delay:.1s}
+header p:last-child{animation-delay:.2s}
+main{max-width:520px;margin:-24px auto 40px;padding:0 16px;position:relative}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 10px 30px rgba(20,33,61,.1);animation:rise .7s .25s both}
+.etapes{display:flex;align-items:center;margin-bottom:18px}
+.pt{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;background:var(--line);color:#5b6477;transition:.4s}
+.pt.on{background:var(--accent);color:var(--ink);transform:scale(1.12)}
+.pt.fait{background:var(--ok);color:#fff}
+.bar{flex:1;height:3px;background:var(--line);position:relative;margin:0 6px}
+.bar i{position:absolute;inset:0;width:0;background:var(--ok);transition:width .5s}
+.bar.fait i{width:100%}
+label{display:block;font-weight:600;margin:16px 0 6px}
+input{width:100%;padding:13px 12px;font:inherit;border:1.5px solid var(--line);border-radius:8px;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(229,168,35,.25);outline:0}
+small{color:#5b6477}
+button,.btn{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;margin-top:20px;padding:14px;font:inherit;font-weight:700;color:var(--ink);background:var(--accent);border:0;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .2s}
+button:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(229,168,35,.45)}
+button:active,.btn:active{transform:scale(.98)}
+button:disabled{opacity:.7;cursor:wait;transform:none;box-shadow:none}
+button:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.spin{width:16px;height:16px;border:3px solid rgba(20,33,61,.3);border-top-color:var(--ink);border-radius:50%;animation:tourne .7s linear infinite}
+.msg{margin-top:14px;font-weight:600;min-height:1.5em}
+.err{color:var(--err)}.good{color:var(--ok)}
+.shake{animation:shake .4s}
+.hide{display:none}
+.slide{animation:glisse .45s both}
+.succes{text-align:center}
+.succes svg{width:90px;height:90px}
+.succes circle{fill:none;stroke:var(--ok);stroke-width:5;stroke-dasharray:252;stroke-dashoffset:252;animation:trace .7s .1s forwards}
+.succes path{fill:none;stroke:var(--ok);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:trace .5s .7s forwards}
+.conf{position:fixed;top:-12px;width:9px;height:14px;z-index:9;pointer-events:none;animation:chute linear forwards}
+@keyframes flow{50%{background-position:100% 50%}}
+@keyframes float{50%{transform:translateY(18px)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+@keyframes glisse{from{opacity:0;transform:translateX(24px)}}
+@keyframes tourne{to{transform:rotate(1turn)}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes trace{to{stroke-dashoffset:0}}
+@keyframes chute{to{transform:translateY(105vh) rotate(720deg);opacity:.8}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <p>BSFE-INSPEI</p>
+  <h1>Confirme ta place à l'INSPEI</h1>
+  <p>Seuls les candidats de la liste officielle des admis peuvent confirmer.</p>
+</header>
+<main>
+  <div class="card" id="carte">
+    <div class="etapes" aria-hidden="true">
+      <span class="pt on" id="p1">1</span><span class="bar" id="b1b"><i></i></span>
+      <span class="pt" id="p2">2</span><span class="bar" id="b2b"><i></i></span>
+      <span class="pt" id="p3">3</span>
+    </div>
+
+    <section id="s1" class="slide">
+      <label for="nom">Ton nom et tes prénoms</label>
+      <input id="nom" autocomplete="name" placeholder="Ex : MENSAH Éloïse">
+      <small>Écris-les comme sur la liste officielle.</small>
+      <button id="b1">Vérifier mon nom</button>
+    </section>
+
+    <section id="s2" class="hide">
+      <p>Bonjour <strong id="who"></strong>, ton nom est bien sur la liste. Il reste à nous laisser tes contacts.</p>
+      <label for="tel">Numéro de téléphone (WhatsApp de préférence)</label>
+      <input id="tel" type="tel" autocomplete="tel" placeholder="Ex : +229 01 00 00 00 00">
+      <label for="mail">Adresse email</label>
+      <input id="mail" type="email" autocomplete="email" placeholder="exemple@gmail.com">
+      <button id="b2">Confirmer ma place</button>
+    </section>
+
+    <section id="s3" class="hide"></section>
+    <p id="msg" class="msg" role="status"></p>
+  </div>
+</main>
+
+<script>
+// A MODIFIER AVANT DE PUBLIER
+const URL_SCRIPT = "COLLE_ICI_LURL_DU_SCRIPT_GOOGLE";
+const WHATSAPP = "229XXXXXXXXXX"; // ton numéro, sans le +
+
+const $ = id => document.getElementById(id);
+let nomSaisi = "";
+
+function msg(t, cls){ const m=$("msg"); m.textContent=t; m.className="msg "+(cls||""); }
+function erreur(t){ msg(t,"err"); const c=$("carte"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); }
+function charge(b, on, txt){ b.disabled=on; b.innerHTML = on ? '<span class="spin"></span>'+txt : txt; }
+function etape(n){
+  [1,2,3].forEach(i=>{ const p=$("p"+i); p.className="pt"+(i<n?" fait":i===n?" on":""); p.textContent=i<n?"\u2713":i; });
+  $("b1b").classList.toggle("fait",n>1); $("b2b").classList.toggle("fait",n>2);
+}
+function montre(id){ ["s1","s2","s3"].forEach(s=>$(s).classList.add("hide")); const e=$(id); e.classList.remove("hide","slide"); void e.offsetWidth; e.classList.add("slide"); }
+function fin(html,n){ $("s3").innerHTML=html; montre("s3"); etape(n||3); msg(""); }
+
+function confettis(){
+  const cols=["#e5a823","#1f7a4d","#14213d","#f3d27a"];
+  for(let i=0;i<40;i++){ const c=document.createElement("i"); c.className="conf";
+    c.style.left=Math.random()*100+"vw"; c.style.background=cols[i%4];
+    c.style.animationDuration=(1.8+Math.random()*1.6)+"s"; c.style.animationDelay=Math.random()*.5+"s";
+    document.body.appendChild(c); setTimeout(()=>c.remove(),4200); }
+}
+const coche='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/><path d="M30 52 L45 66 L71 36"/></svg>';
+
+function refus(){
+  const txt = encodeURIComponent("Bonjour, je n'ai pas trouvé mon nom sur le site de confirmation de place de l'INSPEI. Voici mon nom : " + nomSaisi);
+  fin('<p class="err">Ton nom n\'apparaît pas sur la liste officielle, donc tu ne peux pas confirmer ici.</p>'
+    + '<p>Une liste supplémentaire peut sortir. Écris-moi sur WhatsApp avec ton nom, et si tu es dessus, je te tiendrai informé(e).</p>'
+    + '<a class="btn" href="https://wa.me/'+WHATSAPP+'?text='+txt+'">Écrire sur WhatsApp</a>', 1);
+}
+
+$("nom").addEventListener("keydown", e => { if(e.key==="Enter") $("b1").click(); });
+
+$("b1").onclick = async () => {
+  nomSaisi = $("nom").value.trim();
+  if (nomSaisi.split(/\s+/).length < 2) return erreur("Écris ton nom et au moins un prénom.");
+  charge($("b1"), true, "Vérification..."); msg("");
+  try {
+    const r = await (await fetch(URL_SCRIPT + "?nom=" + encodeURIComponent(nomSaisi))).json();
+    if (r.statut === "absent") { charge($("b1"), false, "Vérifier mon nom"); return refus(); }
+    if (r.statut === "deja") return fin('<div class="succes">'+coche+'<p class="good">Ta place est déjà confirmée. Rien d\'autre à faire.</p></div>');
+    $("who").textContent = r.nom; montre("s2"); etape(2); msg("");
+  } catch (e) { erreur("Problème de connexion. Réessaie dans un instant."); }
+  charge($("b1"), false, "Vérifier mon nom");
+};
+
+$("b2").onclick = async () => {
+  const tel = $("tel").value.trim(), email = $("mail").value.trim();
+  if (tel.replace(/\D/g, "").length < 8) return erreur("Le numéro de téléphone semble incomplet.");
+  if (!/^\S+@\S+\.\S+$/.test(email)) return erreur("L'adresse email n'est pas valide.");
+  charge($("b2"), true, "Enregistrement..."); msg("");
+  try {
+    const r = await (await fetch(URL_SCRIPT, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ nom: nomSaisi, tel, email }) })).json();
+    if (r.statut === "confirme") { fin('<div class="succes">'+coche+'<h2>Place confirmée</h2><p class="good">Garde ton téléphone à portée, on te contactera.</p></div>'); return confettis(); }
+    if (r.statut === "deja") return fin('<div class="succes">'+coche+'<p class="good">Ta place était déjà confirmée.</p></div>');
+    charge($("b2"), false, "Confirmer ma place"); return refus();
+  } catch (e) { erreur("L'enregistrement a échoué. Réessaie."); }
+  charge($("b2"), false, "Confirmer ma place");
+};
+</script>
+</body>
+  </html>
