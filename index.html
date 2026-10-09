@@ -3,164 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Confirmation de place | INSPEI UNSTIM</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Confirmation de place | UNSTIM</title>
 <style>
-:root{--ink:#14213d;--bg:#f6f7f9;--card:#fff;--accent:#e5a823;--ok:#1f7a4d;--err:#b3261e;--line:#d9dde5}
+:root{--ink:#14213d;--accent:#e5a823;--line:#d9dde5}
 *{box-sizing:border-box}
-body{margin:0;font-family:Sora,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
-header{position:relative;overflow:hidden;color:#fff;padding:30px 20px 44px;border-bottom:6px solid var(--accent);
-  background:linear-gradient(120deg,#14213d,#1d3566,#14213d);background-size:200% 200%;animation:flow 10s ease infinite}
-header::before,header::after{content:"";position:absolute;border-radius:50%;background:var(--accent);opacity:.15;animation:float 7s ease-in-out infinite}
-header::before{width:150px;height:150px;right:-40px;top:-50px}
-header::after{width:90px;height:90px;left:-25px;bottom:-35px;animation-delay:-3s}
-header p,header h1{position:relative;max-width:520px;margin-inline:auto;animation:rise .7s both}
-header p{margin-bottom:0}
-header h1{font-size:1.65rem;line-height:1.2;margin-top:6px;margin-bottom:8px;animation-delay:.1s}
-header p:last-child{animation-delay:.2s}
-main{max-width:520px;margin:-24px auto 40px;padding:0 16px;position:relative}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 10px 30px rgba(20,33,61,.1);animation:rise .7s .25s both}
-.etapes{display:flex;align-items:center;margin-bottom:18px}
-.pt{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;background:var(--line);color:#5b6477;transition:.4s}
-.pt.on{background:var(--accent);color:var(--ink);transform:scale(1.12)}
-.pt.fait{background:var(--ok);color:#fff}
-.bar{flex:1;height:3px;background:var(--line);position:relative;margin:0 6px}
-.bar i{position:absolute;inset:0;width:0;background:var(--ok);transition:width .5s}
-.bar.fait i{width:100%}
-label{display:block;font-weight:600;margin:16px 0 6px}
-input{width:100%;padding:13px 12px;font:inherit;border:1.5px solid var(--line);border-radius:8px;transition:border-color .2s,box-shadow .2s}
-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(229,168,35,.25);outline:0}
-small{color:#5b6477}
-button,.btn{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;margin-top:20px;padding:14px;font:inherit;font-weight:700;color:var(--ink);background:var(--accent);border:0;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .2s}
-button:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(229,168,35,.45)}
-button:active,.btn:active{transform:scale(.98)}
-.msg{margin-top:14px;font-weight:600;min-height:1.5em}
-.err{color:var(--err)}.good{color:var(--ok)}
-.shake{animation:shake .4s}
-.hide{display:none}
-.slide{animation:glisse .45s both}
-.succes{text-align:center}
-.succes svg{width:90px;height:90px}
-.succes circle{fill:none;stroke:var(--ok);stroke-width:5;stroke-dasharray:252;stroke-dashoffset:252;animation:trace .7s .1s forwards}
-.succes path{fill:none;stroke:var(--ok);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:trace .5s .7s forwards}
-@keyframes flow{50%{background-position:100% 50%}}
-@keyframes float{50%{transform:translateY(18px)}}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}}
-@keyframes glisse{from{opacity:0;transform:translateX(24px)}}
-@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-@keyframes trace{to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+body{margin:0;font-family:system-ui,sans-serif;background:#f6f7f9;color:var(--ink);line-height:1.6}
+header{background:var(--ink);color:#fff;padding:28px 20px 40px;border-bottom:6px solid var(--accent)}
+header p,header h1{max-width:520px;margin:0 auto}
+header h1{font-size:1.5rem;line-height:1.25;margin-top:6px}
+main{max-width:520px;margin:-20px auto 40px;padding:0 16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 10px 30px rgba(20,33,61,.1)}
+.btn{display:block;text-align:center;margin-top:18px;padding:14px;font-weight:700;color:var(--ink);background:var(--accent);border-radius:8px;text-decoration:none}
+ol{padding-left:20px}
 </style>
 </head>
 <body>
 <header>
   <p>BSFE-INSPEI</p>
-  <h1>Confirme ta place à l'INSPEI</h1>
-  <p>Seuls les candidats de la liste officielle des admis peuvent confirmer.</p>
+  <h1>Les confirmations ne se font plus sur ce site</h1>
 </header>
 <main>
-  <div class="card" id="carte">
-    <div class="etapes" aria-hidden="true">
-      <span class="pt on" id="p1">1</span><span class="bar" id="b1b"><i></i></span>
-      <span class="pt" id="p2">2</span><span class="bar" id="b2b"><i></i></span>
-      <span class="pt" id="p3">3</span>
-    </div>
-
-    <section id="s1" class="slide">
-      <label for="nom">Ton nom et tes prénoms</label>
-      <input id="nom" autocomplete="name" placeholder="Ex : MENSAH Éloïse">
-      <small>Écris-les comme sur la liste officielle.</small>
-      <button id="b1">Vérifier mon nom</button>
-    </section>
-
-    <section id="s2" class="hide">
-      <p>Bonjour <strong id="who"></strong>, ton nom est bien sur la liste. Il reste à nous laisser tes contacts.</p>
-      <label for="tel">Numéro de téléphone (WhatsApp de préférence)</label>
-      <input id="tel" type="tel" autocomplete="tel" placeholder="Ex : +229 01 00 00 00 00">
-      <label for="mail">Adresse email</label>
-      <input id="mail" type="email" autocomplete="email" placeholder="exemple@gmail.com">
-      <button id="b2">Confirmer ma place</button>
-    </section>
-
-    <section id="s3" class="hide"></section>
-    <p id="msg" class="msg" role="status"></p>
+  <div class="card">
+    <p>Pour confirmer ta place, rends-toi sur la plateforme officielle de l'UNSTIM. Cette étape est obligatoire pour que ta place soit confirmée.</p>
+    <a class="btn" href="https://etudiant.unstim.bj/">Aller sur la plateforme de l'UNSTIM</a>
+    <ol>
+      <li>Clique sur "Accéder à mon espace" ou sur "Confirmation de place".</li>
+      <li>Première connexion : identifiant et mot de passe = ton numéro de table au BAC. Change ensuite ton mot de passe.</li>
+      <li>Renseigne tes informations, puis fais la confirmation de place.</li>
+      <li>Va jusqu'à "Confirmation de place validée" et télécharge ton document.</li>
+    </ol>
+    <p><strong>À faire rapidement, avant le 10 octobre.</strong></p>
   </div>
 </main>
-
-<script>
-// A MODIFIER : ton numéro WhatsApp, sans le + (ex : 22901000000)
-const WHATSAPP = "2290192624133";
-
-const LISTE = [
-"NOUSSAHOU|Samuel José","KPOMAHO|Bignon Estino Melvin","HOUNDJAHOUE|Sèdjro Lumen","AGBIDINOUKOUN|Axel Cédric Akpédjé",
-"SALIFOU ASSOUIN|Chérif","LOKOSSOU BOCO ABLI|Medesse Oswald Amen","WELLA|Salomon","AKPOVO|Destine Manwanou",
-"LIADY|Ismaïl Ishola Adéwalé Akorédé","ATTINGAMME|Mahougnon Fred Trésor","DASSI|Ayodé Sènami Grâce Divine","DANNON|Prince Donald",
-"HOUNDJI|Brayane Sègnon Dario","TONOU ADAHOU|Amidou","BOSSOU|Gamavo Brown","AGUESSY|Paulin-Muriel Sedjro",
-"AHOLOU|Sedjro Joris Précieux","SINGBO|Finagnon Mariel Joino","LOKOSSOU|Séjesuton Jésam Joas","GANHOUNOUTO|Togbédji Enock Hector",
-"BAKPE|Ridwan","HOUNGBEDJI|Christson Abdiel Barak Ben-Shaddai","KOUDOKPODE|Mahuton Ronaldo Josaphat","GBAVOU LOHOU|Vertueux Mawouyram Consolateur",
-"SALAKO|Klissimèyon Perside","ADOTO|Bignon Franklin","ADJANOUHOUANKOUN|Mawuna Deogracias","TOVIESSI|Yetontcho Ozias Michael",
-"KASSOUNOU|Tawal","LANDEHOU|Gedeon","WANNOUKON|Benoît","AYIDEGNON|Zinsou Michel Kévin",
-"CHEDJI|Louange Esther Dègnon","HOUNKPETO|Aihadji Prince","HOUNKANRIN|Jawu Moïse","CHABI|Werry I. B. Eliès Aldricks",
-"AKOUENOUBA|Impérial Testac Christimè Crédo","ALFA BIO|Rahim","DJOSSOU|Symplice Gustave","N'SOUGAN|Paul Salifou",
-"AKABASSI|Godwill Daniel","LOKOSSOU|Féerique Housnia Sèdami","MOUNKEILA|Aliyath","YAGBANNON|Elie Mètogbé",
-"AZONSI|Marie Adorèce Mahuclo","HOUENONTIN|Ange Noé","MITCHAI|Ernestine Nondomey Belvida","ALOUKOU|Vigan Daniel",
-"AZANDOSSESSI|Esteban Madjid Oremide","BONI|Staline Franklin","DAGBETO|Aldric Précieux Mahugnon","ZOUNTCHEME|Ayanman Jaïrus Luck",
-"TCHEHO|Mahougnon Harold Servais","KPOSSOU|Olouwakèmi Espérancia","OROU DOKO|Sanni Benjamin","SOVI|Dona Gbèdossou",
-"YAKA|Ola-Fèmi Franck","ZOHOUNGBOGBO|Pierrick Mahouna Joseph","AGNIHOUEDE|Messan Baude Cyriano","ASSOGBAGA|Christ Aris Melvys",
-"GOUSSANOU|Témilola Espéra Silas","ADESSE|Yélian Samuel Michel","ACLAGBE|Gabin Camille","AGOSSOU|Ilios Prince Lysias",
-"AKPADJAN|Sènakpon Ange Blessing","DOUROSSIMY|Marie-Albert Adékounlé","GANHOU|Akpénin Josué Glorieux","GBENOU|Dossi Dotou Zita",
-"SABI YÔ|Sabi Kora","SODJINOU|Toyigbe Mathys Aymard","AGBAYAHOUN|Sètondji Chamile Hydalgo","HOUNKANRIN|Bryan Derek Sedo",
-"TOBOU|Oswald Ochosias Ayétou","AZONHOUMON|Finagnon Victorin","HOUEDANOU|Gaston De Marie","BADOU|Joël Toussaint Sam Fifatin",
-"HOUNGBEME|Sèwanoudé Godspeed Gaël","LANDEOU|Exaucé Sèwèto Loïc","TASSINDJA|Ibtissam","AHOUIGNAN|Espérance Lydwine Houéfa",
-"EKPELIKPEZE|Armolive Amen Espoir","HOUNKPATIN|Cyrus Fernando Sènan","GBEDO|Sèflinmy Milka"
-];
-
-const $ = id => document.getElementById(id);
-let nomTrouve = "", nomSaisi = "";
-
-const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean);
-function trouver(saisie){
-  const m = norm(saisie); if (m.length < 2) return null;
-  for (const l of LISTE){ const t = norm(l.replace("|"," ")); if (m.every(x => t.includes(x))) return l.split("|").join(" "); }
-  return null;
-}
-
-function msg(t, cls){ const m=$("msg"); m.textContent=t; m.className="msg "+(cls||""); }
-function erreur(t){ msg(t,"err"); const c=$("carte"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); }
-function etape(n){
-  [1,2,3].forEach(i=>{ const p=$("p"+i); p.className="pt"+(i<n?" fait":i===n?" on":""); p.textContent=i<n?"\u2713":i; });
-  $("b1b").classList.toggle("fait",n>1); $("b2b").classList.toggle("fait",n>2);
-}
-function montre(id){ ["s1","s2","s3"].forEach(s=>$(s).classList.add("hide")); const e=$(id); e.classList.remove("hide","slide"); void e.offsetWidth; e.classList.add("slide"); }
-function fin(html,n){ $("s3").innerHTML=html; montre("s3"); etape(n||3); msg(""); }
-const coche='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/><path d="M30 52 L45 66 L71 36"/></svg>';
-
-function refus(){
-  const txt = encodeURIComponent("Bonjour, je n'ai pas trouvé mon nom sur le site de confirmation de place de l'INSPEI. Voici mon nom : " + nomSaisi);
-  fin('<p class="err">Ton nom n\'apparaît pas sur la liste officielle, donc tu ne peux pas confirmer ici.</p>'
-    + '<p>Une liste supplémentaire peut sortir. Écris-moi sur WhatsApp avec ton nom, et si tu es dessus, je te tiendrai informé(e).</p>'
-    + '<a class="btn" href="https://wa.me/'+WHATSAPP+'?text='+txt+'">Écrire sur WhatsApp</a>', 1);
-}
-
-$("nom").addEventListener("keydown", e => { if(e.key==="Enter") $("b1").click(); });
-
-$("b1").onclick = () => {
-  nomSaisi = $("nom").value.trim();
-  if (nomSaisi.split(/\s+/).length < 2) return erreur("Écris ton nom et au moins un prénom.");
-  nomTrouve = trouver(nomSaisi);
-  if (!nomTrouve) return refus();
-  $("who").textContent = nomTrouve; montre("s2"); etape(2); msg("");
-};
-
-$("b2").onclick = () => {
-  const tel = $("tel").value.trim(), email = $("mail").value.trim();
-  if (tel.replace(/\D/g, "").length < 8) return erreur("Le numéro de téléphone semble incomplet.");
-  if (!/^\S+@\S+\.\S+$/.test(email)) return erreur("L'adresse email n'est pas valide.");
-  const texte = "Confirmation de place INSPEI\nNom : " + nomTrouve + "\nTéléphone : " + tel + "\nEmail : " + email;
-  const lien = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(texte);
-  fin('<div class="succes">'+coche+'<h2>Dernière étape</h2><p>Appuie sur le bouton, WhatsApp s\'ouvre avec ton message. <strong>Appuie sur envoyer</strong> : ta place n\'est confirmée qu\'après l\'envoi.</p></div>'
-    + '<a class="btn" href="'+lien+'">Envoyer sur WhatsApp</a>');
-};
-</script>
 </body>
 </html>
